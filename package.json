@@ -12,7 +12,7 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.40.0",
-    "nova": "file:./packages/nova",
+    "@untrustnova/nova-framework": "file:../nova-framework",
     "pg": "^8.13.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

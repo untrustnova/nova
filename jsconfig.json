@@ -4,13 +4,13 @@
     "paths": {
       "@app/*": ["app/*"],
       "@web/*": ["web/*"],
-      "nova/*": ["packages/nova/*"]
+      "@untrustnova/nova-framework/*": ["../nova-framework/*"]
     }
   },
   "include": [
     "app",
     "web",
-    "packages",
+    "../nova-framework",
     "server.js",
     "nova.config.js"
   ]

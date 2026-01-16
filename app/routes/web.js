@@ -1,13 +1,12 @@
-import { route } from 'nova/routing';
-import { HomeController } from '../controllers/home.controller.js';
+import { route } from '@untrustnova/nova-framework/routing';
 
-const controller = new HomeController();
+export default () => {
+  const routes = route();
 
-export default () =>
-  route()
-    .get('/', controller.index.bind(controller))
-    .get('/status', async ({ res }) => {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ status: 'ready' }));
-    })
-    .toArray();
+  routes.get('/', 'HomeController@index');
+  routes.get('/status', async ({ response }) => {
+    response.json({ status: 'ready' });
+  });
+
+  return routes.toArray();
+};

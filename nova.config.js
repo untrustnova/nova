@@ -1,14 +1,21 @@
-import { defineConfig, react, tailwindcss } from 'nova/config';
+import { defineConfig, react, tailwindcss } from '@untrustnova/nova-framework/config';
 
 export default defineConfig({
   app: {
     name: process.env.NOVA_APP_NAME || 'Nova',
     url: process.env.NOVA_APP_URL || 'http://localhost:3000',
     env: process.env.NOVA_ENV || 'development',
+    debug: process.env.NOVA_DEBUG === 'true',
   },
   server: {
     host: process.env.NOVA_HOST || '0.0.0.0',
     port: Number(process.env.NOVA_PORT || 3000),
+  },
+  security: {
+    bodyLimit: 1024 * 1024,
+  },
+  kernel: {
+    adapter: process.env.NOVA_KERNEL_ADAPTER || 'node',
   },
   database: {
     default: process.env.NOVA_DB_CONNECTION || 'postgres',
@@ -19,15 +26,19 @@ export default defineConfig({
       },
       mysql: {
         driver: 'mysql2',
-        url: process.env.NOVA_MYSQL_URL,
+        url: process.env.NOVA_DATABASE_URL,
       },
       sqlite: {
         driver: 'better-sqlite3',
-        url: process.env.NOVA_SQLITE_URL || 'file:./storage/db.sqlite',
+        url: process.env.NOVA_DATABASE_URL || 'file:./storage/db.sqlite',
       },
       mongodb: {
         driver: 'mongodb',
-        url: process.env.NOVA_MONGODB_URL,
+        url: process.env.NOVA_DATABASE_URL,
+      },
+      supabase: {
+        driver: 'supabase',
+        url: process.env.NOVA_DATABASE_URL,
       },
     },
   },
@@ -63,5 +74,15 @@ export default defineConfig({
     entry: './web/main.jsx',
     globals: './web/styles/globals.css',
   },
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss({
+      content: ['./web/**/*.{js,jsx}'],
+    }),
+  ],
+  alias: {
+    '@': './web',
+    '@components': './web/components',
+    '@lib': './web/lib',
+  },
 });

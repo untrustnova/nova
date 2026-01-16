@@ -1,6 +1,7 @@
-export class HomeController {
-  async index({ res }) {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: 'Welcome to Nova.js', status: 'ok' }));
+import { Controller } from '@untrustnova/nova-framework/controller';
+
+export default class HomeController extends Controller {
+  async index({ response }) {
+    response.json({ message: 'Welcome to Nova.js', status: 'ok' });
   }
 }

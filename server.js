@@ -1,12 +1,12 @@
 import 'dotenv/config';
 import config from './nova.config.js';
-import { NovaKernel } from 'nova/kernel';
-import { storageModule, cacheModule, logsModule } from 'nova/modules';
+import { NovaKernel } from '@untrustnova/nova-framework/kernel';
+import { storageModule, cacheModule, logsModule } from '@untrustnova/nova-framework/modules';
 
-const kernel = new NovaKernel(config);
+const app = new NovaKernel(config);
 
-kernel.registerModule('storage', storageModule);
-kernel.registerModule('cache', cacheModule);
-kernel.registerModule('logs', logsModule);
+app.registerModule('storage', storageModule);
+app.registerModule('cache', cacheModule);
+app.registerModule('logs', logsModule);
 
-kernel.start();
+app.start();
