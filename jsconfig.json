@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["app/*"],
+      "@web/*": ["web/*"],
+      "nova/*": ["packages/nova/*"]
+    }
+  },
+  "include": [
+    "app",
+    "web",
+    "packages",
+    "server.js",
+    "nova.config.js"
+  ]
+}
