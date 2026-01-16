@@ -56,14 +56,16 @@ A modern full-stack JavaScript framework combining React frontend with a robust 
 ### Installation
 
 ```bash
-npm install -g nova-cli
+npm install -g @untrustnova/nova-cli
 nova new my-nova-app
 cd my-nova-app
 npm install
 npm run dev
 ```
 
-Visit `http://localhost:3000` and you're ready to build!
+Dev URLs:
+- Backend API: `http://localhost:3000`
+- Frontend (Vite): `http://localhost:5173`
 
 ### Create Your First Controller
 
@@ -84,6 +86,11 @@ npm run build
 ```
 
 ---
+
+## 🧰 Troubleshooting
+
+- Jika `nova dev` gagal karena Tailwind, install: `npm install -D tailwindcss @tailwindcss/postcss autoprefixer postcss`
+- Jika `nova` command tidak ditemukan, pastikan `npm install -g @untrustnova/nova-cli` dan PATH sudah benar
 
 ## 🏗️ Architecture
 
@@ -222,6 +229,7 @@ my-nova-app/
 ├── .prettierrc                   # Prettier Configuration
 ├── jsconfig.json                 # Path Aliases
 ├── nova.config.js                # Framework Configuration
+├── vite.config.js                # Vite (sync dari nova.config.js)
 ├── server.js                     # Server Entry Point
 ├── package.json
 ├── docker-compose.yml

@@ -76,9 +76,6 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    tailwindcss({
-      content: ['./web/**/*.{js,jsx}'],
-    }),
   ],
   alias: {
     '@': './web',
