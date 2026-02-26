@@ -6,11 +6,11 @@ Nova.js is a modern framework built on **Bun** and **[Seishiro API](https://naki
 
 ## ✨ Key Features
 
-* **SADA Architecture**: Struktur kendali terpusat untuk efisiensi maksimal.
-* **Protocol Agnostic**: Satu logika untuk REST API, Server Actions, dan System Actions.
-* **Zero-Config Bundler**: Compiler internal otomatis untuk React/Vue tanpa perlu Vite.
-* **Seishiro Inside**: Standarisasi response protocol dan sistem keamanan versi yang ketat.
-* **Native Bun Support**: Performa kilat dengan pemanfaatan runtime modern.
+* **SADA Architecture**: Centralized control structure for maximum efficiency.
+* **Protocol Agnostic**: One logic for REST API, Server Actions, and System Actions.
+* **Zero-Config Bundler**: Automatic internal compiler for React/Vue without the need for Vite.
+* **Seishiro Inside**: Standardization of response protocols and strict security systems.
+* **Native Bun Support**: Lightning-fast performance with modern runtime utilization.
 
 ## 🚀 Quick Start
 
