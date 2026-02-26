@@ -2,7 +2,7 @@
 
 ### *The Strict-Action Dispatcher Architecture Framework*
 
-Nova.js adalah framework modern yang dibangun di atas **Bun** dan **Seishiro API**. Nova.js menghilangkan kompleksitas *folder-routing* tradisional dan menggantinya dengan sistem **Single Command Dispatcher** yang presisi, aman, dan sangat cepat.
+Nova.js adalah framework modern yang dibangun di atas **Bun** dan **(Seishiro API)[https://nakikoneko.gitbook.io/seishiroapi/]**. Nova.js menghilangkan kompleksitas *folder-routing* tradisional dan menggantinya dengan sistem **Single Command Dispatcher** yang presisi, aman, dan sangat cepat.
 
 ## ✨ Key Features
 
@@ -75,9 +75,7 @@ Akses endpoint tunggal kamu melalui:
 
 ---
 
-**Build with 💙 by novahoshizora**
+**Build with 💙 by novahoshizora** and @AndraZero121
 *Powered by Seishiro API Architecture*
 
 ---
-
-Nn, README ini sudah mencakup semua yang kita bangun tadi. Apakah ada bagian spesifik seperti panduan **ORM (Drizzle/Prisma)** yang ingin Nn tambahkan di dalamnya? ^w^
