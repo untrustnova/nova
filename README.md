@@ -47,7 +47,7 @@ The Nova.js folder structure is designed for high scalability:
 
 ```
 
-## 🛡️ SADA Protocol Example
+## 🛡️ SADA Protocol Example (Seishiro)
 
 In Nova.js, you no longer need to create route files one by one. Simply register "Action" in the registry:
 
@@ -75,8 +75,14 @@ Access your single endpoint via:
 
 ---
 
-**Build with 💙 by Nova Hoshizora and [@AndraZero121](https://github.com/AndraZero121)**
-*Powered by Seishiro API*
+### 💁🏻‍♂️ Support
 
-LICENSE by MIT.
+You can support us by helping us making this framework usable for all of us! If there was any issue, feel free to tell at the `issue` section.
+
+---
+
+**Build with 💙 by Nova Hoshizora and [@AndraZero121](https://github.com/AndraZero121)**,
+*Powered by [Seishiro](https://nakikoneko.gitbook.io/seishiroapi)*
+
+LICENSED by MIT License.
 ---
