@@ -2,7 +2,7 @@
 
 ### *The Strict-Action Dispatcher Architecture Framework*
 
-Nova.js adalah framework modern yang dibangun di atas **Bun** dan **[Seishiro API](https://nakikoneko.gitbook.io/seishiroapi)**. Nova.js menghilangkan kompleksitas *folder-routing* tradisional dan menggantinya dengan sistem **Single Command Dispatcher** yang presisi, aman, dan sangat cepat.
+Nova.js is a modern framework built on **Bun** and **[Seishiro API](https://nakikoneko.gitbook.io/seishiroapi)**. Nova.js eliminates the complexity of traditional *folder-routing* and replaces it with a precise, secure, and extremely fast **Single Command Dispatcher** system.
 
 ## ✨ Key Features
 
@@ -14,14 +14,14 @@ Nova.js adalah framework modern yang dibangun di atas **Bun** dan **[Seishiro AP
 
 ## 🚀 Quick Start
 
-Untuk memulai project baru, pastikan Nn sudah menginstall `nova-cli` secara global, lalu jalankan:
+To start a new project, make sure you have installed `nova-cli` globally, then run:
 
 ```bash
 novajs create my-awesome-app
 
 ```
 
-Masuk ke direktori dan nyalakan mode development:
+Enter the directory and turn on development mode:
 
 ```bash
 cd my-awesome-app
@@ -31,7 +31,7 @@ novajs dev
 
 ## 🏗️ Folder Structure
 
-Struktur folder Nova.js didesain untuk skalabilitas tinggi:
+The Nova.js folder structure is designed for high scalability:
 
 ```text
 /my-app
@@ -49,7 +49,7 @@ Struktur folder Nova.js didesain untuk skalabilitas tinggi:
 
 ## 🛡️ SADA Protocol Example
 
-Dalam Nova.js, Nn tidak lagi membuat file route satu per satu. Cukup daftarkan "Action" di registry:
+In Nova.js, you no longer need to create route files one by one. Simply register "Action" in the registry:
 
 ```javascript
 // src/controllers/user.js
@@ -62,20 +62,21 @@ registry.set("user:get-profile", GetProfile);
 
 ```
 
-Akses endpoint tunggal kamu melalui:
-`POST http://localhost:3000/api/action` dengan payload `{ "type": "user:get-profile" }`.
+Access your single endpoint via:
+`POST http://localhost:3000/api/action` with payload `{ "type": "user:get-profile" }`.
 
 ---
 
 ### 🛠️ Commands
 
-* `novajs install` - Menginstal dependensi berdasarkan lockfile yang terdeteksi.
-* `novajs dev` - Menjalankan compiler dan server dalam mode watch.
-* `novajs build` - Mengompilasi views dan logic untuk produksi.
+* `novajs install` - Installing dependencies based on the detected lockfile.
+* `novajs dev` - Run the compiler and server in watch mode.
+* `novajs build` - Compiling views and logic for production.
 
 ---
 
-**Build with 💙 by novahoshizora** and @AndraZero121
-*Powered by Seishiro API Architecture*
+**Build with 💙 by Nova Hoshizora and [@AndraZero121](https://github.com/AndraZero121)**
+*Powered by Seishiro API*
 
+LICENSE by MIT.
 ---
