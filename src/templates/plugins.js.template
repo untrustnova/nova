@@ -1,0 +1,6 @@
+/**
+ * 🐺 Nova.js Plugins (ESM)
+ */
+export const react = (options = {}) => ({ name: 'nova-react', options });
+export const vue = (options = {}) => ({ name: 'nova-vue', options });
+export const tailwind = (options = {}) => ({ name: 'nova-tailwind', options });

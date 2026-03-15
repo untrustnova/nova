@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/* 🐺 Nova.js Theme Configuration (v4 Style) */
+@theme {
+  --color-nova: #3b82f6;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Custom Base Styles */
+@layer base {
+  body {
+    @apply antialiased selection:bg-nova selection:text-white;
+  }
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .glass {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .light .glass {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+}

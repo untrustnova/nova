@@ -1,0 +1,12 @@
+/**
+ * 🐺 Nova.js S3 Service (ESM)
+ */
+export class S3Service {
+    constructor(config) {
+        this.config = config;
+    }
+
+    async upload(file, key) {
+        return { url: `https://${this.config.bucket}.s3.amazonaws.com/${key}` };
+    }
+}

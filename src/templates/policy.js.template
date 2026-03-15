@@ -1,0 +1,11 @@
+import { PolicyBuilder } from "seishiro";
+
+/**
+ * 🐺 Nova System Policy (ESM)
+ */
+export const policy = new PolicyBuilder({
+    passkey: process.env.SEISHIRO_PASSKEY || "secret-nova-key",
+    version_now: "1.0.0",
+    version_min: "1.0.0",
+    version_forceupdate: false,
+});

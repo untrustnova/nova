@@ -1,0 +1,26 @@
+// src/agents/example-agent.js
+/**
+ * 🐺 Nova.js AI Agent Controller
+ * Agents are specialized controllers that can interact with LLMs
+ * and perform autonomous tasks within the SADA architecture.
+ */
+
+const { logger } = require("../utils/logger");
+
+const ExampleAgent = async ({ data, system }) => {
+    logger.info(`Agent receiving task: ${data.task || "No task provided"}`);
+    
+    // Logic for interacting with an LLM (OpenAI, Gemini, local)
+    // const result = await llm.complete(data.task);
+    
+    return {
+        data: {
+            status: "success",
+            agent: "Nova-Alpha",
+            response: `I have analyzed your task: ${data.task || 'Empty'}`,
+            timestamp: new Date().toISOString()
+        }
+    };
+};
+
+module.exports = { ExampleAgent };

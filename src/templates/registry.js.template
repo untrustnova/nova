@@ -1,0 +1,6 @@
+import { RegistryBuilder } from "seishiro";
+import { WelcomeController } from "../controllers/welcome.js";
+
+export const registry = new RegistryBuilder();
+
+registry.set("app:welcome", WelcomeController);

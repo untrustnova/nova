@@ -1,0 +1,13 @@
+/**
+ * 🐺 Nova.js Cache Service (ESM)
+ */
+export class CacheService {
+    constructor(config) {
+        this.config = config;
+        this.client = null; 
+    }
+
+    async get(key) { return null; }
+    async set(key, value, ttl = 3600) { return true; }
+    async del(key) { return true; }
+}

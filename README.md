@@ -1,88 +1,123 @@
-# 🐺 Nova.js
+<div align="center">
 
-### *The Strict-Action Dispatcher Architecture Framework*
+<img src="assets/nova.png" alt="Nova.js Logo" width="120" />
 
-Nova.js is a modern framework built on **Bun** and **[Seishiro API](https://nakikoneko.gitbook.io/seishiroapi)**. Nova.js eliminates the complexity of traditional *folder-routing* and replaces it with a precise, secure, and extremely fast **Single Command Dispatcher** system.
+# 🐺 Nova.js CLI
+### *The High-Performance SADA Orchestrator*
 
-## ✨ Key Features
+[![npm version](https://img.shields.io/npm/v/nova-cli?color=3b82f6&style=flat-square)](https://www.npmjs.com/package/nova-cli)
+[![license](https://img.shields.io/github/license/untrustnova/novajs?color=3b82f6&style=flat-square)](LICENSE)
+[![bun](https://img.shields.io/badge/Bun-Ready-black?style=flat-square&logo=bun)](https://bun.sh)
+[![architecture](https://img.shields.io/badge/Arch-SADA-blue?style=flat-square)](https://nakikoneko.gitbook.io/seishiroapi)
 
-* **SADA Architecture**: Centralized control structure for maximum efficiency.
-* **Protocol Agnostic**: One logic for REST API, Server Actions, and System Actions.
-* **Zero-Config Bundler**: Automatic internal compiler for React/Vue without the need for Vite.
-* **Seishiro Inside**: Standardization of response protocols and strict security systems.
-* **Native Bun Support**: Lightning-fast performance with modern runtime utilization.
+**Engineered for Absolute Performance. Built for Infinite Scalability.**
 
-## 🚀 Quick Start
+[Getting Started](#-quick-start) • [Features](#-key-features) • [Architecture](#-sada-architecture) • [Documentation](https://nakikoneko.gitbook.io/seishiroapi)
 
-To start a new project, make sure you have installed `nova-cli` globally, then run:
+</div>
+
+---
+
+<div align="center">
+  <img src="assets/nova-anime.png" alt="Nova Anime" width="100%" style="border-radius: 20px; box-shadow: 0 20px 50px rgba(59, 130, 246, 0.2);" />
+</div>
+
+## ✨ Why Nova.js?
+
+Nova.js isn't just another CLI; it's a **dispatcher-first ecosystem** designed to eliminate the "spaghetti routing" of traditional backends. By implementing the **Strict-Action Dispatcher Architecture (SADA)** via Seishiro API, your code remains modular, predictable, and insanely fast.
+
+## 🚀 Key Features
+
+- **⚡ Sat-Set Performance**: Native **Bun.serve** integration. If you run it on Bun, it flies.
+- **🧩 Pure SADA**: Decoupled Registry, Controllers, and Policies. Scale without friction.
+- **🤖 Future-Proof**: Built-in **AI Agents** & **MCP Server** (Model Context Protocol) templates.
+- **💻 Pro Dashboard**: A built-in management panel in **React** or **Vue**. Zero setup required.
+- **🔒 Enterprise Security**: Centralized **PolicyBuilder** for versioning and secret passkeys.
+- **🐳 DevOps on Autopilot**: One-command **Docker** & **Docker Compose** generation.
+- **🛠️ Batteries Included**: 
+  - **S3 Storage** (AWS/DO/MinIO)
+  - **Redis/Valkey** Cache
+  - **Drizzle/Prisma/Mongo** Ready
+  - **Paperlog** Structured Logging
+
+---
+
+## 🏗️ SADA Architecture
+
+Nova.js follows the **SADA** (Strict-Action Dispatcher Architecture) pattern:
+
+1. **Registry**: The Map. Connects Action Types to Logic.
+2. **Controller**: The Brain. Pure business logic functions.
+3. **Policy**: The Guard. Handles security, versioning, and rules.
+4. **Message**: The Voice. Standardized, multi-language responses.
+5. **Dispatcher**: The Engine. Orchestrates everything into a unified API entry point.
+
+---
+
+## 🛠️ Installation
+
+Get the wolf running on your machine:
 
 ```bash
-novajs create my-awesome-app
+# Global installation
+npm install -g nova-cli
 
+# Or via Bun (Recommended)
+bun add -g nova-cli
 ```
 
-Enter the directory and turn on development mode:
+## 📖 Quick Start
 
+### 1. Create your world
 ```bash
-cd my-awesome-app
-novajs dev
-
+nova create my-galaxy
 ```
 
-## 🏗️ Folder Structure
-
-The Nova.js folder structure is designed for high scalability:
-
-```text
-/my-app
- ├── /public           # Static assets & Compiled Bundle
- ├── /src
- │    ├── /actions     # Dispatcher Registry & Policies
- │    ├── /controllers # Business Logic (SADA Controllers)
- │    ├── /core        # Compiler & Internal Plugins
- │    ├── /views       # Frontend Components (React/Vue)
- │    └── index.js     # Entry Point Server
- ├── nova.config.js    # Centralized Configuration
- └── .env              # Environment Secrets
-
+### 2. Enter the atmosphere
+```bash
+cd my-galaxy
 ```
 
-## 🛡️ SADA Protocol Example (Seishiro)
-
-In Nova.js, you no longer need to create route files one by one. Simply register "Action" in the registry:
-
-```javascript
-// src/controllers/user.js
-export const GetProfile = async ({ data, system }) => {
-  return { data: { name: "Shiroko", role: "Developer" } };
-};
-
-// src/dispatcher.js
-registry.set("user:get-profile", GetProfile);
-
+### 3. Ignite the engines
+```bash
+nova dev
 ```
 
-Access your single endpoint via:
-`POST http://localhost:3000/api/action` with payload `{ "type": "user:get-profile" }`.
+### 4. Enter the Command Center
+Navigate to `http://localhost:3000/dashboard` and use your `SEISHIRO_PASSKEY` from `.env`.
 
 ---
 
-### 🛠️ Commands
+## 🐺 The Local Orchestrator
 
-* `novajs install` - Installing dependencies based on the detected lockfile.
-* `novajs dev` - Run the compiler and server in watch mode.
-* `novajs build` - Compiling views and logic for production.
+Every project comes with its own local `nova` manager. Use it to stay in control:
 
----
-
-### 💁🏻‍♂️ Support
-
-You can support us by helping us making this framework usable for all of us! If there was any issue, feel free to tell at the `issue` section.
+- `nova dev` — Hot-reload development server.
+- `nova dashboard` — Show dashboard access info.
+- `nova build` — Compile artifacts for production.
+- `nova up` — Spin up Docker containers (App + DB).
+- `nova info` — View project metadata and configuration.
 
 ---
 
-**Build with 💙 by Nova Hoshizora and [@AndraZero121](https://github.com/AndraZero121)**,
-*Powered by [Seishiro](https://nakikoneko.gitbook.io/seishiroapi)*
+## 📂 Project Structure
 
-LICENSED by MIT License.
+- `src/registry/`: Action mappings.
+- `src/controllers/`: Business logic.
+- `src/agents/`: AI Agent controllers.
+- `src/mcp/`: MCP Server tools.
+- `src/utils/`: S3, Cache, Logger, Error Handler.
+- `database/`: Models, migrations, and seeds.
+- `web/`: Frontend source (React/Vue).
+- `public/`: Static assets & build files.
+
 ---
+
+<div align="center">
+
+### Built with 💙 for the next generation of developers.
+**Join the pack. Build the future.**
+
+[Website](https://novajs.org) • [Documentation](https://nakikoneko.gitbook.io/seishiroapi) • [GitHub](https://github.com/untrustnova/novajs)
+
+</div>

@@ -1,0 +1,50 @@
+// src/mcp/server.js
+const { registry } = require("../registry");
+const { logger } = require("../utils/logger");
+
+/**
+ * 🐺 Nova.js MCP Server (Model Context Protocol)
+ * Expose your Seishiro actions as MCP Tools for AI agents like Claude or Gemini.
+ */
+
+class NovaMCPServer {
+    constructor() {
+        this.tools = [];
+        this.initializeTools();
+    }
+
+    initializeTools() {
+        // Convert Registry types to MCP Tools
+        const actionTypes = registry.getRegistryTypes();
+        
+        this.tools = actionTypes.map(type => ({
+            name: type.replace(/:/g, '_'),
+            description: `Execute the ${type} action on the Nova.js backend.`,
+            inputSchema: {
+                type: "object",
+                properties: {
+                    data: { type: "object", description: "Payload for the action" }
+                }
+            }
+        }));
+        
+        logger.info(`MCP Server initialized with ${this.tools.length} tools.`);
+    }
+
+    getTools() {
+        return this.tools;
+    }
+
+    async handleAction(name, args) {
+        const type = name.replace(/_/g, ':');
+        logger.info(`MCP Tool Called: ${type}`);
+        
+        // This would integrate with Seishiro Actions to execute the logic
+        // and return the response to the AI agent.
+        return {
+            content: [{ type: "text", text: `Action ${type} triggered via MCP.` }]
+        };
+    }
+}
+
+module.exports = { NovaMCPServer };

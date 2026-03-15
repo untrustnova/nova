@@ -1,0 +1,19 @@
+import { logger } from "../utils/logger.js";
+
+/**
+ * 🐺 Nova.js Register Controller (ESM)
+ */
+export const RegisterController = async ({ data, system }) => {
+    const { username, email, passkey } = data;
+    
+    // Logic for creating system user or saving to DB
+    logger.info(`New registration request for: ${username}`);
+
+    return {
+        status: 201,
+        data: {
+            message: "System registered successfully!",
+            user: { username, email }
+        }
+    };
+};

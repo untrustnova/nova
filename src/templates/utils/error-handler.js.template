@@ -1,0 +1,21 @@
+import pc from "picocolors";
+
+/**
+ * 🐺 Nova.js Global Error Handler (ESM)
+ */
+export const errorHandler = (err, req, res) => {
+    console.error(pc.red(`[ERROR] ${err.message}`));
+    
+    const status = err.status || 500;
+    const message = err.message || "Internal Server Error";
+
+    res.writeHead(status, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({
+        status: "error",
+        error: {
+            code: status,
+            message: message,
+            timestamp: new Date().toISOString()
+        }
+    }));
+};

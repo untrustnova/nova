@@ -1,0 +1,11 @@
+import { MessageBuilder } from "seishiro";
+
+/**
+ * 🐺 Standardized Response Messages (ESM)
+ */
+export const message = new MessageBuilder("en");
+
+message.set("no-registry", "The action type '{{type}}' was not found in the registry.");
+message.set("unauthorized", "Access denied. Valid passkey is required.");
+message.set("version-mismatch", "App version mismatch. Required: {{min}}, Current: {{current}}.");
+message.set("success", "Action executed successfully!");

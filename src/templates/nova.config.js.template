@@ -1,0 +1,49 @@
+import "dotenv/config";
+import * as plugins from "./src/core/plugins.js";
+
+/** 
+ * 🐺 Nova.js Central Configuration (ESM)
+ */
+export default {
+    server: {
+        port: process.env.PORT || 3000,
+        host: "localhost",
+        env: process.env.APP_ENV || "development",
+    },
+    app: {
+        name: "{{APP_NAME}}",
+        language: "{{LANGUAGE}}",
+        version: "1.0.0",
+    },
+    database: {
+        orm: "{{ORM}}",
+        url: process.env.DATABASE_URL,
+        schemaDir: "./database/models",
+        migrationDir: "./database/migrations",
+        seedDir: "./database/seeds",
+    },
+    storage: {
+        provider: "s3",
+        region: process.env.S3_REGION,
+        bucket: process.env.S3_BUCKET,
+    },
+    cache: {
+        provider: "redis",
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT,
+    },
+    dashboard: {
+        enabled: {{INCLUDE_AUTH}},
+        framework: "{{FRAMEWORK}}",
+        entry: "./web/main.jsx",
+        route: "/dashboard",
+    },
+    plugins: [
+        {{PLUGINS}}
+    ],
+    sada: {
+        strictRouting: true,
+        dispatcherPath: "./src/dispatcher.js",
+        actionDir: "./src/actions",
+    }
+};

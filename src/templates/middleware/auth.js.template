@@ -1,0 +1,17 @@
+/**
+ * 🐺 Nova.js Auth Middleware (ESM)
+ */
+export const AuthMiddleware = async ({ data, system }) => {
+    const authHeader = system.headers['authorization'];
+    const passkey = process.env.SEISHIRO_PASSKEY || "secret-nova-key";
+    const expectedToken = Buffer.from(passkey).toString('base64');
+
+    if (authHeader && authHeader === `Bearer ${expectedToken}`) {
+        return true;
+    }
+
+    return {
+        status: 401,
+        data: { message: "Unauthorized. Please login again." }
+    };
+};

@@ -1,0 +1,80 @@
+#!/usr/bin/env node
+
+/**
+ * 🐺 Nova.js Project Orchestrator (ESM)
+ */
+
+import { spawn } from "node:child_process";
+import pc from "picocolors";
+import fs from "node:fs";
+import path from "node:path";
+
+const args = process.argv.slice(2);
+const command = args[0];
+
+// Load Config using dynamic import
+const configPath = fs.existsSync("./nova.config.ts") ? "./nova.config.ts" : "./nova.config.js";
+let config = {};
+try {
+    const { default: cfg } = await import(path.join(process.cwd(), configPath));
+    config = cfg;
+} catch (e) {}
+
+const printBanner = () => {
+    console.log(pc.cyan(`
+   /\\_/\\   ${pc.bold(pc.white('Nova.js'))} ${pc.gray('v' + (config.app?.version || '1.0.0'))}
+  ( o.o )  ${pc.blue('SADA')} Architecture
+   > ^ <   ${pc.gray('-----------------------')}
+    `));
+};
+
+const printHelp = () => {
+    printBanner();
+    const label = (text) => pc.bold(pc.white(text.padEnd(12)));
+    const desc = (text) => pc.gray(text);
+
+    console.log(pc.white(pc.bold("USAGE:")) + pc.cyan("  ./nova") + pc.yellow(" <command>") + pc.white(" [options]\n"));
+    console.log(pc.blue(pc.bold("ENVIRONMENT")));
+    console.log(`  ${label("dev")} ${desc("Start development server with hot-reload")}`);
+    console.log(`  ${label("build")} ${desc("Compile application for production")}`);
+    console.log(`  ${label("start")} ${desc("Run the production build")}`);
+    console.log(pc.blue(pc.bold("\nMANAGEMENT")));
+    console.log(`  ${label("dashboard")} ${desc("Access the Nova Management Control Panel")}`);
+    console.log(`  ${label("info")} ${desc("Display project configuration & metadata")}`);
+    console.log(`  ${label("migrate")} ${desc("Synchronize database with current models")}`);
+    console.log(pc.blue(pc.bold("\nINFRASTRUCTURE")));
+    console.log(`  ${label("up")} ${desc("Provision & start Docker containers")}`);
+    console.log(`  ${label("down")} ${desc("Stop and remove Docker resources")}`);
+    console.log(`  ${label("logs")} ${desc("View real-time application logs")}\n`);
+};
+
+const exec = (cmd, args = []) => {
+    return spawn(cmd, args, { stdio: "inherit", shell: true });
+};
+
+switch (command) {
+    case "dev":
+        console.log(pc.cyan("🐺 Dispatching Nova ecosystem..."));
+        exec("npm", ["run", "dev"]);
+        break;
+    case "dashboard":
+        const route = config.dashboard?.route || "/dashboard";
+        const port = config.server?.port || 3000;
+        console.log(pc.green("\n✨ Nova Dashboard active at: ") + pc.blue(pc.underline(`http://localhost:${port}${route}`)));
+        break;
+    case "info":
+        printBanner();
+        const info = [
+            ["Project Name", config.app?.name || "Nova App"],
+            ["Database", config.database?.orm || "None"],
+            ["Framework UI", config.dashboard?.framework || "React/Vue"],
+        ];
+        info.forEach(([k, v]) => console.log(`${pc.white(k.padEnd(15))} : ${pc.cyan(v)}`));
+        break;
+    case "logs": exec("docker-compose", ["logs", "-f"]); break;
+    case "build": exec("npm", ["run", "build"]); break;
+    case "migrate": exec("npm", ["run", "migrate"]); break;
+    case "up": exec("docker-compose", ["up", "-d"]); break;
+    case "down": exec("docker-compose", ["down"]); break;
+    default: printHelp(); break;
+}

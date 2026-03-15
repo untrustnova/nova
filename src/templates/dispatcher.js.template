@@ -1,0 +1,6 @@
+import { Actions } from "seishiro";
+import { registry } from "./registry/index.js";
+import { message } from "./messages/index.js";
+import { policy } from "./policy/index.js";
+
+export const action = new Actions({ registry, message, policy });

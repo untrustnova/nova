@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Nova.js</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #000; color: #fff; overflow: hidden; }
+        .glass { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+    <div id="reg-card" class="w-full max-w-md glass p-10 rounded-[2.5rem] shadow-2xl opacity-0">
+        <div class="text-center mb-10">
+            <img src="/images/nova.png" class="w-16 h-16 mx-auto mb-6 drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]">
+            <h1 class="text-3xl font-black tracking-tight mb-2">Create Account</h1>
+            <p class="text-slate-400 text-sm">Join the next-generation ecosystem.</p>
+        </div>
+
+        <form class="space-y-4">
+            <input type="text" placeholder="Username" class="w-full bg-black/50 border border-slate-800 p-5 rounded-2xl focus:outline-none focus:border-blue-500 transition-all">
+            <input type="email" placeholder="Email Address" class="w-full bg-black/50 border border-slate-800 p-5 rounded-2xl focus:outline-none focus:border-blue-500 transition-all">
+            <input type="password" placeholder="System Passkey" class="w-full bg-black/50 border border-slate-800 p-5 rounded-2xl focus:outline-none focus:border-blue-500 transition-all">
+            <button class="w-full bg-blue-600 hover:bg-blue-500 py-5 rounded-2xl font-black shadow-lg shadow-blue-900/20 active:scale-95 transition-all mt-4">
+                Register System
+            </button>
+        </form>
+        
+        <p class="text-center mt-8 text-sm text-slate-500">
+            Already have access? <a href="/login" class="text-blue-400 font-bold">Log in here</a>
+        </p>
+    </div>
+
+    <script>
+        gsap.to("#reg-card", { opacity: 1, y: -20, duration: 1, ease: "power4.out" });
+    </script>
+</body>
+</html>

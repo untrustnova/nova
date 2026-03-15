@@ -1,0 +1,26 @@
+import { logger } from "../utils/logger.js";
+
+/**
+ * 🐺 Nova.js Auth Controller (ESM)
+ */
+export const LoginController = async ({ data, system }) => {
+    const { passkey } = data;
+    const systemPasskey = process.env.SEISHIRO_PASSKEY || "secret-nova-key";
+
+    if (passkey === systemPasskey) {
+        logger.success("Dashboard login successful!");
+        return {
+            status: 200,
+            data: {
+                message: "Login successful!",
+                token: Buffer.from(passkey).toString('base64'),
+                user: { name: "Admin", role: "Superuser" }
+            }
+        };
+    }
+
+    return {
+        status: 401,
+        data: { message: "Invalid passkey. Access denied." }
+    };
+};

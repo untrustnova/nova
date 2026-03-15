@@ -1,0 +1,137 @@
+import "dotenv/config";
+import http from "node:http";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import pc from "picocolors";
+import { action } from "./dispatcher.js";
+import { logger } from "./utils/logger.js";
+import { errorHandler } from "./utils/error-handler.js";
+
+const configPath = path.join(process.cwd(), "nova.config.js");
+const { default: config } = await import(`file://${configPath}`);
+
+const PORT = config.server?.port || 3000;
+const HOST = config.server?.host || "localhost";
+
+const printServerWelcome = () => {
+    console.log(pc.cyan(`
+   /\\_/\\   ${pc.bold(pc.white('Nova.js'))} ${pc.gray('v' + (config.app?.version || '1.0.0'))}
+  ( o.o )  ${pc.blue('Enterprise')} ESM Server
+   > ^ <   ${pc.gray('-----------------------')}
+    `));
+
+    const label = (text) => pc.white(text.padEnd(15));
+    const value = (text) => pc.cyan(text);
+
+    console.log(`${pc.bold(pc.white('  APPLICATION'))}`);
+    console.log(`  ${label('Name')} : ${value(config.app?.name || 'nova-app')}`);
+    console.log(`  ${label('Architecture')} : ${value('SADA (ESM)')}`);
+
+    console.log(`\n${pc.bold(pc.white('  NETWORK'))}`);
+    console.log(`  ${label('Local URL')} : ${pc.blue(pc.underline(`http://${HOST}:${PORT}`))}`);
+
+    const dbStatus = config.database?.orm && config.database.orm !== 'none' ? pc.green(config.database.orm) : pc.red('Not Configured');
+    const cacheStatus = config.cache?.host ? pc.green('Connected') : pc.red('Not Configured');
+    const storageStatus = config.storage?.bucket ? pc.green('S3 Ready') : pc.yellow('Not Configured (Local)');
+
+    console.log(`\n${pc.bold(pc.white('  RESOURCES'))}`);
+    console.log(`  ${label('Database')} : ${dbStatus}`);
+    console.log(`  ${label('Cache')} : ${cacheStatus}`);
+    console.log(`  ${label('Storage')} : ${storageStatus}`);
+
+    console.log(pc.gray('\n  --------------------------------------------------'));
+    console.log(pc.white(`  SYSTEM READY. DISPATCHER LISTENING...`));
+    console.log(pc.gray('  --------------------------------------------------\n'));
+};
+
+const getMimeType = (ext) => {
+    const types = { '.html': 'text/html', '.js': 'text/javascript', '.jsx': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpg', '.gif': 'image/gif', '.svg': 'image/svg+xml' };
+    return types[ext] || 'application/octet-stream';
+};
+
+const processNovaAssets = (html) => {
+    return html.replace(/@nova\(\[(.*?)\]\)/g, (match, files) => {
+        return `<link rel="stylesheet" href="/public/css/nova.css">\n<script type="module" src="/dist/bundle.js"></script>\n`;
+    });
+};
+
+const coreHandler = async (reqInfo) => {
+    const { method, url, headers, getBody, remoteAddress } = reqInfo;
+    const startTime = Date.now();
+    let actionPayload = null;
+
+    try {
+        if (url === "/api/action" && method === "POST") {
+            const body = await getBody();
+            actionPayload = body ? JSON.parse(body) : {};
+            const result = await action.APIAction({
+                type: actionPayload.type, data: actionPayload.data,
+                version: headers['x-app-version'] || '1.0.0',
+                lang: headers['x-accept-language'] || 'en',
+                system: { headers, ip: remoteAddress, method, url }
+            });
+            return { status: result.status || 200, body: JSON.stringify(result), type: 'application/json', startTime, actionPayload };
+        }
+
+        if (url === "/" || !url.includes('.')) {
+            const indexPath = path.join(process.cwd(), "public/index.html");
+            if (fs.existsSync(indexPath)) {
+                let content = fs.readFileSync(indexPath, "utf8");
+                return { status: 200, body: processNovaAssets(content), type: 'text/html', startTime };
+            }
+        }
+
+        const fullPath = path.join(process.cwd(), url.startsWith('/') ? url.slice(1) : url);
+        if (fs.existsSync(fullPath) && fs.lstatSync(fullPath).isFile()) {
+            return { status: 200, body: fs.readFileSync(fullPath), type: getMimeType(path.extname(fullPath).toLowerCase()), startTime };
+        }
+
+        return { status: 404, body: "Not Found", type: 'text/plain', startTime };
+    } catch (err) {
+        return { status: 500, body: JSON.stringify({ error: err.message }), type: 'application/json', startTime };
+    }
+};
+
+if (typeof Bun !== "undefined") {
+    try {
+        const buildResult = await Bun.build({
+            entrypoints: ['./web/main.jsx'],
+            outdir: './dist',
+            naming: 'bundle.js',
+            external: ['*.css', '*.png', '*.jpg', '*.svg'],
+            minify: false,
+        });
+        if (buildResult.success) {
+            console.log(pc.green('  [WEB] Frontend bundled.'));
+        } else {
+            console.log(pc.red('  [WEB] Bundle failed:'));
+            buildResult.logs.forEach(l => console.log(pc.yellow(`    - ${l.message}`)));
+        }
+    } catch(e) { console.log(pc.red('  [BUILD ERROR] ' + e.message)); }
+
+    printServerWelcome();
+
+    const server = Bun.serve({
+        port: PORT,
+        async fetch(request) {
+            const url = new URL(request.url);
+            const reqInfo = { method: request.method, url: url.pathname, headers: Object.fromEntries(request.headers), remoteAddress: '127.0.0.1', getBody: () => request.text() };
+            const res = await coreHandler(reqInfo);
+            logger.http({ method: reqInfo.method, url: reqInfo.url }, { statusCode: res.status }, Date.now() - res.startTime, res.actionPayload);
+            return new Response(res.body, { status: res.status, headers: { "Content-Type": res.type, "Access-Control-Allow-Origin": "*" } });
+        }
+    });
+} else {
+    const server = http.createServer(async (req, res) => {
+        const reqInfo = { method: req.method, url: req.url, headers: req.headers, remoteAddress: req.socket.remoteAddress, getBody: () => new Promise(r => { let b = ""; req.on("data", c => b += c); req.on("end", () => r(b)); }) };
+        const result = await coreHandler(reqInfo);
+        logger.http(req, { statusCode: result.status }, Date.now() - result.startTime, result.actionPayload);
+        res.writeHead(result.status, { "Content-Type": result.type, "Access-Control-Allow-Origin": "*" });
+        res.end(result.body);
+    });
+    server.listen(PORT, () => {
+        printServerWelcome();
+        console.log(`  ${pc.white('ENGINE')}      : ${pc.yellow('Node.js V8')}`);
+    });
+}

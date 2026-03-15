@@ -1,0 +1,8 @@
+export const WelcomeController = async ({ data, system }) => {
+    return {
+        status: "success",
+        message: "🐺 Welcome to Nova.js!",
+        architecture: "SADA (ESM Standard)",
+        timestamp: new Date().toISOString()
+    };
+};

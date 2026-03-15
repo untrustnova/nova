@@ -1,0 +1,18 @@
+import pc from "picocolors";
+
+export const logger = {
+    info: (msg) => console.log(`${pc.gray(new Date().toLocaleTimeString())} ${pc.blue('INFO'.padEnd(7))} | ${msg}`),
+    success: (msg) => console.log(`${pc.gray(new Date().toLocaleTimeString())} ${pc.green('SUCCESS'.padEnd(7))} | ${msg}`),
+    error: (msg) => console.log(`${pc.gray(new Date().toLocaleTimeString())} ${pc.red('ERROR'.padEnd(7))} | ${msg}`),
+    http: (req, res, duration, payload = null) => {
+        const time = pc.gray(new Date().toLocaleTimeString());
+        const method = pc.bold(pc.cyan(req.method.padEnd(6)));
+        const url = pc.white(req.url.padEnd(25));
+        const status = res.statusCode >= 400 ? pc.red(res.statusCode) : pc.green(res.statusCode);
+        const ms = pc.gray(`${duration}ms`.padStart(6));
+        console.log(`${time} ${pc.magenta('DISPATCH')} | ${method} | ${url} | ${status} | ${ms}`);
+        if (payload && payload.type) {
+            console.log(`               ${pc.gray('↳')} ${pc.yellow('Action:')} ${pc.bold(pc.white(payload.type))} ${pc.gray('|')} ${pc.yellow('Data:')} ${pc.gray(JSON.stringify(payload.data || {}))}`);
+        }
+    }
+};

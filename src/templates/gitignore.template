@@ -1,0 +1,11 @@
+# 🐺 Nova.js Ignore Rules
+node_modules
+.env
+.DS_Store
+dist
+public/css/nova.css
+bun.lockb
+package-lock.json
+*.log
+.vscode
+.idea
